@@ -1,0 +1,56 @@
+192a193
+>   double gsm_inv[3];
+199d199
+< 
+236c236
+<   if (options.CROPFRAC) { //true or false set in global file, default=false
+---
+>   if (options.CROPFRAC) {
+373,378c373,378
+<                   //if (gsm_inv[lidx]<1) { //nb ingjerd kommentert vekk pga gsm_inv
+<                   //  if (options.CROPFRAC && veg_con[iveg].crop_frac_active)
+< 		  //   all_vars_crop->veg_var[veg_con[iveg].crop_frac_idx+1][band].irr_apply = TRUE;
+< 		  // else if (veg_con[iveg].crop_frac_active)
+< 		  //   veg_var[iveg][band].irr_apply = TRUE;
+<                   //}
+---
+>                   if (gsm_inv[lidx]<1) {
+>                     if (options.CROPFRAC && veg_con[iveg].crop_frac_active)
+>                       all_vars_crop->veg_var[veg_con[iveg].crop_frac_idx+1][band].irr_apply = TRUE;
+>                     else if (veg_con[iveg].crop_frac_active)
+>                       veg_var[iveg][band].irr_apply = TRUE;
+>                   }
+428d427
+< 
+864a864,867
+> 
+> 
+> 
+> 
+942,947c945
+<       if (iveg!=Nveg){
+<         bare_albedo = veg_var[iveg][0].albedo;
+<       }
+<       else {
+<         bare_albedo = BARE_SOIL_ALBEDO;
+<       }
+---
+>       bare_albedo = veg_var[iveg][0].albedo;
+1092c1090,1094
+<      } /** end if crop_frac_active **/
+---
+> 
+> 
+> 
+>       } /** end if crop_frac_active **/
+> 
+1169,1170c1171,1172
+<       // Handle non-crop tiles 
+< 	if (!options.CROPFRAC || !veg_con[iveg].crop_frac_active) {
+---
+>         // Handle crop tiles (fallow and crop sub-tiles)
+>         if (!options.CROPFRAC || !veg_con[iveg].crop_frac_active) {
+1173c1175
+< 	}
+---
+>         }

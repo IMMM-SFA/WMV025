@@ -1,0 +1,8 @@
+______________________________________________________________
+1/26/2018 by Tian Zhou
+Reservoir model 0.25 degree resolution based on UCLA shattel-arab runs
+
+changes made: rescale the annual mean water demand using annual mean streamflow for dry basins where the VIC calculated water demand is much higher than the river can provide.
+/models/rout/ReadWaterDemand.c
+/models/rout/ReservoirRouting.c
+______________________________________________________________

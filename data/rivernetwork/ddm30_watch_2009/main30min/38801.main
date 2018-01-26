@@ -1,0 +1,26 @@
+# 38801 #
+BASIN_NUMBER    38801
+FLOW_DIREC_FILE input/38801.dir
+VELOCITY_FILE   1.5
+DIFF_FILE       800
+XMASK_FILE      input/38801.xmask
+FRACTION_FILE   input/38801.frac
+IRRIGATION      0
+ROUTED_FILE     input/38801.irrb
+RESERVOIRS      0
+RESERVOIR_FILE  input/38801.resb
+STATION_FILE    input/38801.sta
+FLUX_PATH       ../output/standard
+INPUT_FILE_PATH ../output/standard.ascii/fluxes_
+INPUT_FILE_PREC 4
+DEMAND_FILE_PATH /mn/hox/hydro/ingjerd/global/data/dams/reservoir_data
+DEMAND          0
+OUT_FILE_PATH   output/38801.wb/
+WORK_PATH       output/38801.wb/
+NAT_PATH        output/2000/3618.wb.irr_false/
+INPUT_DATES     1984 1 1999 12
+OUTPUT_DATES    1984 1 1999 12 
+UNIT_HYD_FILE   input/uh.file
+MOSCEM_FILE_PATH data/ 
+MOSCEM_OUTPUT_NAME output/output.day 
+

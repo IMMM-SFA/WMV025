@@ -1,0 +1,17 @@
+Year		0	0	5	1
+Month		1	0	5	1
+Day		2	0	5	1
+PrecipOrig 		3	1	4	1
+Precip      4       1       4       1
+Snowf 		5	1	4	1
+Evap		6  	1	4	1
+Runoff		7 	1	4	1
+Baseflow        8       1       4	1
+SWE             9	2	4       1
+ExWater         10      1       4       1
+SoilM1           11      2       2       10
+SoilM2          12      2       2       10
+SoilM3          13      2       2       10
+PotLake        14      1       4       1
+Wind            15      2       2       1
+AirTemp         16      2       3       100
