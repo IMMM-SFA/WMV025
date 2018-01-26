@@ -1,16 +1,16 @@
-WMV025 is a Water Management model coupling with VIC hydrologic model at 0.25 degree resolugion.
-
-“TUTORIAL”: Running VIC with irrigation and dams included.
-Ingjerd Haddeland, December 2010. Updated November 2011 and March 2012 and Sep.2013 by Tian Zhou.
+# Water Management model coupling with VIC hydrologic model at 0.25 degree resolution (WMV025)
+- Running VIC with irrigation and dam regulations included.
+- Ingjerd Haddeland, December 2010. Updated November 2011 and March 2012 
+- Tian Zhou, Sep. 2013, Jan 2018
 
 This document and accompanying files are an incomplete description/tutorial on how to
-run VIC with irrigation and dams included. Make a directory, copy the BasinRun to that directory. 
+run VIC with irrigation and dams included. Make a directory, copy the BasinRun to that directory.
 As the VIC irrigation and dam modules are not totally flexible (but you can of course change this yourself!). The
 scheme is described in Haddeland et al. (2006a; 2006b), but the tutorial version is missing some
 features that are in the original version (e.g. reservoir evaporation). The tutorial version has undergone
 limited quality checking, so do not be overly surprised of you find some errors. Also, some of the
-scripts are flexible, others still expect e.g. certain paths or file formats. I’ve tried to include
-information on this in the run_*.sh scripts, but I won’t guarantee that the information is complete.
+scripts are flexible, others still expect e.g. certain paths or file formats. I've tried to include
+information on this in the run_*.sh scripts, but I won't guarantee that the information is complete.
 VIC runs cell by cell, and routing is done as a postprocessing step. In order to do water withdrawals
 properly, we need to work our way from upstream to downstream locations in a basin, and
 downstream cells need to have information on how much water is available in the river and in
@@ -25,19 +25,19 @@ Basin has number 38801 (DDM30 global basin mask file).
 
 Before you start a VIC-irrig-dam run, you have to do two stand-alone VIC runs for your area. These
 runs, and the other runs (and routing), should cover the same period.
-1) Naturalized run – flux files should be in output/wfd/baseline/noirr.wb.24hr. Use
+1) Naturalized run  flux files should be in output/wfd/baseline/noirr.wb.24hr. Use
 global_files/global.406.wb.24hr.2009A with IRRIGATION=FALSE and IRR_FREE=FALSE
-2) Potential irrigation run – flux files should be in output/wfd/baseline/freeirr.wb.24hr. Use
+2) Potential irrigation run flux files should be in output/wfd/baseline/freeirr.wb.24hr. Use
 global_files/global.406.wb.24hr.2009A with IRRIGATION=TRUE and IRR_FREE=TRUE
 Meterological forcings are not included in tutorial. Routing input files are only included for Colorado
 (basin number 38801).
 NB! If you only want to use the reservoir scheme, you can use the included routing-reservoir scheme
 directly, since the routing scheme is totally independent of VIC itself. However, take into account that
-one of the objective functions in the reservoir scheme is “water demand”, and if you do not give
+one of the objective functions in the reservoir scheme is water demand, and if you do not give
 information on water demands to the routing scheme, the reservoirs built for irrigation purposes may
 behave somewhat strange.
 
-1. OVERVIEW
+- OVERVIEW
 run/run_all.sh initiates a run for one basin (or many basins in a loop), here it is defined what
 combination of irrigation and/or dams that are to be used. run/run_all.sh also starts
 programs/scripts/run_irrig.sh .
@@ -49,7 +49,7 @@ use, multiple routing networks and forcings, so if you are concentrating on a si
 forcings, you may simplify.
 
 A (always): Make a list of the latitudes/longitudes and fractions of cells within basin
-B (flag –e): Extract the appropriate lines from the soil file
+B (flag ï¿½e): Extract the appropriate lines from the soil file
 C (-i): Extract the appropriate lines from the irrigation fraction file
 D (-f): Find dams within basin at time of interest
 E (-w): Find irrigation water demand within basin
@@ -66,9 +66,9 @@ river flow, or where irrigated fraction >0.1 percent, or a cell in which is a da
 a gage, or the cell is at the outlet of the basin). Everything needed to do the run is
 done automatically, but is dependent on A-H above.
 
-2. Files needed; explanations
-A number of files are needed, in addition to the traditional VIC files, for the vic-rout-vic runs.
+-  Files needed; explanations
 
+A number of files are needed, in addition to the traditional VIC files, for the vic-rout-vic runs.
 misc/fluxes.vic: Information on fluxes in VIC output. The columns are: Name, number (from 0 to
 nfluxes), flux or avg number (1=flux,2=avg), type (1=char,2=unsigned short int,3=signed short
 int,4=float,5=int), mult. factor in output (corresponding to the numbers in your global file).
@@ -87,9 +87,9 @@ cover entire area of interest (here: CRU landmask)
 data/aquastat/world.cropping.month.wfd: Cropping calendar. Must cover entire are of interest,
 also non-irrigated cells.
 
-3. Files made (preprocessing acitivities); some explanations
+- Files made (preprocessing acitivities); some explanations
 
-run/rout/input/38801.reservoirs.firstline (flag –f)
+run/rout/input/38801.reservoirs.firstline (flag ï¿½f)
 10 5 -110.75 33.25 506 Coolidge 1929 1323526.0 76080.0 0.0 0 0 0 77 IHR
 2 9 -114.75 35.25 509 Davis 1953 2242840.0 114122.0 0.0 0 0 0 61 H
 3 11 -114.25 36.25 524 Hoover 1936 37296796.0 663687.0 0.0 1434 0 0 223 SHI
@@ -102,7 +102,7 @@ Capacity(1000m3) SurfArea(1000m2) CatchArea(km2) InstCap(MW) AnnEnergy(GWh)
 IrrAreas(km2) Height(m) Purpose
 Purpose: Must use capital letters. H = hydropower, I = irrigation, C = flood (ICOLD dam register
 letters).
-run/rout/input/38801.points(flag –f)
+run/rout/input/38801.points(flag ï¿½f)
 17 15 -107.25 38.25 BlueMesa 1
 10 5 -110.75 33.25 Coolidge 2
 13 20 -109.25 40.75 FlamingG 3
@@ -113,7 +113,7 @@ run/rout/input/38801.points(flag –f)
 The .points file includes information on cells within the basin of special interest, i.e. dams, gage
 location and the outlet location. This file will be used to sort the basin cells before the simulations are
 performed.
-run/38801.reservoirs.extractwater (flag –w)
+run/38801.reservoirs.extractwater (flag ï¿½w)
 Gives information on which dams water can be extracted from. For each cell. includes info on
 capacity and mean annual inflow to the reservoir.
 data/dams/unh/2000/<damname>.calc.irrdemand.monthly (flag -w)
@@ -121,7 +121,7 @@ Monthly time series of a) net irrigation demand and b) gross irrigation demand (
 slightly higher, should not really be interpreted as gross demand; irrigation efficiencies are not
 included)
 
-4. VIC 4.0.6 WITH IRRIGATION.
+- VIC 4.0.6 WITH IRRIGATION.
 Limitations in modelling scheme when irrigation is included in this VIC version: Only tested in daily
 water balance mode, one elevation band, and without distributed precipitation. Also, you can get water
 balance errors at the beginning of the second simulation month (has to do with initialization), so
@@ -190,14 +190,14 @@ layers, the added columns are: Col 54: Currently not used (although it may seem 
 read_soilparam.c). Col 55: options.BASEFLOW (overrules info in global file). Col 56:
 options.ROOT_ZONES (overrules info in global file).
 
-5. ROUTING WITH RESERVOIRS (ROUT_NEW)
-You need to customize “ReadDataForReservoirEvaporation.c”! Reads VIC daily binary output files,
-expects a certain number and order of fluxes in binary files. In the version you’ve got: Commented out.
+-  ROUTING WITH RESERVOIRS (ROUT_NEW)
+You need to customize ï¿½ReadDataForReservoirEvaporation.cï¿½! Reads VIC daily binary output files,
+expects a certain number and order of fluxes in binary files. In the version youï¿½ve got: Commented out.
 
 You need to make links in the directory where you run the routing model to "run_moscem" and
 "run_moscem_leapyear" (moscem related files; included in the .tar file).
 
-All arcinfo-type input files must have the header included. Preprocessing scripts expects a ‘0’ at the
+All arcinfo-type input files must have the header included. Preprocessing scripts expects a ï¿½0ï¿½ at the
 outlet cells in the direction files.
 
 You must first run the model for naturalized situation, and in this case OUT_FILE_PATH,
@@ -244,7 +244,7 @@ Areas already routed won't be routed again. I.e. if an upstream station location
 during this run, or previously (see above).
 
 If you want to do the routing at a location upstream other gauges, you have to make sure the
-'Already routed' column is set to 0 at the downstream location.......oh, bad programming…...
+'Already routed' column is set to 0 at the downstream location.......oh, bad programmingï¿½...
 
 Daily results can be somewhat different when routing multiple locations at once, compared to
 routing one by one. Monthly files seem ok, though.
@@ -261,15 +261,18 @@ surface water fluxes, Geophys. Res. Lett., 33(8), Art. No. L08406,
 doi:10.1029/2006GL026047
 
 
-The steps to run the reservoir model
+----------
+**Added by Tian Zhou**
+
+- The steps to run the reservoir model
 1.	The base directory of the reservoir model is located in /net/power/raid/tizhou/BASE
 2.	To run a new basin (e.g. Colorado), please create a new directory (e.g. Colorado_run) and copy everything in BASE to the new directory.
-3.	Update 3 files for your basin: 
+3.	Update 3 files for your basin:
 a) flow direction file /data/rivernetwork/ddm30_watch_2009/dir30min_overlap/38801.dir
 b) fraction file /data/rivernetwork/ddm30_watch_2009/frac30min/38801.frac
 c) mask file /data/rivernetwork/ddm30_watch_2009/mask30min/38801.xmask
 4.	Run the "makeexe.sh" in BasinRun directory to change the permission of executables
-5.	Run "run_irrig.sh 38801 2 -b -c -d -e -f -g -h -i -j ("2" indicates no reservoir no irrigation scenario) 
+5.	Run "run_irrig.sh 38801 2 -b -c -d -e -f -g -h -i -j ("2" indicates no reservoir no irrigation scenario)
 6.	Run "run_irrig.sh 38801 5 -j". ("5" indicates reservoir and irrigation scenario)
 7.	The results are located in /run/rout/output/wfd/baseline/irrig.res.wb.24hr/
 
